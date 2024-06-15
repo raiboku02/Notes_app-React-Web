@@ -1,0 +1,20 @@
+.mainForm {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.addNoteButton {
+    height: 40px;
+    width: 100px;
+    border-radius: 10px;
+    border-width: 1px;
+    margin: 5px;
+}
+.allNotesButton {
+    height: 40px;
+    width: 100px;
+    border-radius: 10px;
+    border-width: 1px;
+    margin: 5px;
+}

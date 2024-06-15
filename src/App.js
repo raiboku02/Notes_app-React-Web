@@ -19,7 +19,7 @@ function App() {
   return (
     <div className="App">
       <NavBar></NavBar>
-      <h1>MainPage</h1>
+      <h1>Main Page</h1>
       <ul>{renderTodos()}</ul>
     </div>
   );
