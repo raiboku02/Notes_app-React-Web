@@ -1,0 +1,24 @@
+.main {
+    background-color:springgreen;
+    padding: 5px;
+    flex: 1;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+.text {
+    font-weight: bolder;
+    font-size: 24px;
+    margin-left: 10px;
+}
+.navBarLink {
+    margin-left: 5px;
+    margin-right: 5px;
+}
+.navBarButton {
+    background-color: white;
+    border-radius: 10px;
+    height: 40px;
+    width: 100px;
+}
