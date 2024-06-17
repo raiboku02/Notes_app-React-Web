@@ -1,21 +1,38 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./AddNotes.css";
 import NavBar from "../components/NavBar";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const AddNotes = () => {
+  const location = useLocation()
+  const returnedNotes = location.state;
+
   const navigate = useNavigate();
 
-  const [note, setNote] = useState("");
-
-  const onSetText = (data) => {
-    let _data = data.target.value;
-    setNote(_data);
-  };
+  const [note, setNote] = useState(" ");
+  const [allNotes, setAllNotes] = useState([...returnedNotes.addedNote]);
+  const [shouldNavigate, setShouldNavigate] = useState(false);
 
   const onClickSave = () => {
-    navigate("/all-notes", { state: note });
+    let copyAllNotes = [...allNotes];
+    copyAllNotes.push({
+      id: new Date().getTime(),
+      note: note,
+    });
+    setAllNotes(copyAllNotes);
+    setShouldNavigate(true);
   };
+
+  useEffect(() => {
+    if (shouldNavigate) {
+      navigate("/all-notes", { state: allNotes });
+      setShouldNavigate(false);
+    }
+  }, [allNotes, shouldNavigate, navigate]);
+
+  useEffect(() => {
+    console.log(returnedNotes)
+  }, [returnedNotes]);
 
   return (
     <div>
@@ -29,9 +46,9 @@ const AddNotes = () => {
             className="textArea"
             type="text"
             onResize={false}
-            onChange={(text) => onSetText(text)}
+            onChange={(text) => setNote(text.target.value)}
           ></textarea>
-          <p>{note}</p>
+          {/* <p>{allNotes[allNotes.length].note}</p> */}
           <input
             className="addButton"
             type="button"
