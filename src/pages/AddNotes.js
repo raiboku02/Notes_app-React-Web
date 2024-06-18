@@ -1,38 +1,26 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import "./AddNotes.css";
 import NavBar from "../components/NavBar";
-import { useLocation, useNavigate } from "react-router-dom";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const AddNotes = () => {
-  const location = useLocation()
-  const returnedNotes = location.state;
+  const navigate = useNavigate()
 
-  const navigate = useNavigate();
+  const [note, setNote] = useState(' ');
 
-  const [note, setNote] = useState(" ");
-  const [allNotes, setAllNotes] = useState([...returnedNotes.addedNote]);
-  const [shouldNavigate, setShouldNavigate] = useState(false);
-
-  const onClickSave = () => {
-    let copyAllNotes = [...allNotes];
-    copyAllNotes.push({
-      id: new Date().getTime(),
-      note: note,
-    });
-    setAllNotes(copyAllNotes);
-    setShouldNavigate(true);
-  };
-
-  useEffect(() => {
-    if (shouldNavigate) {
-      navigate("/all-notes", { state: allNotes });
-      setShouldNavigate(false);
+  const onClickSave = async () => {
+    let saveNote = {
+      note: note
     }
-  }, [allNotes, shouldNavigate, navigate]);
-
-  useEffect(() => {
-    console.log(returnedNotes)
-  }, [returnedNotes]);
+    console.log(note)
+    try {
+      await axios.post('http://localhost:8808/notes', saveNote)
+      navigate('/all-notes')
+    } catch (error) {
+      console.log(error)
+    }
+  }
 
   return (
     <div>
