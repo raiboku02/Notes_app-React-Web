@@ -33,6 +33,7 @@ const AddNotes = () => {
           <textarea
             className="textArea"
             type="text"
+            placeholder="Type Note Here..."
             onResize={false}
             onChange={(text) => setNote(text.target.value)}
           ></textarea>

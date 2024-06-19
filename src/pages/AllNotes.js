@@ -8,6 +8,8 @@ const AllNotes = () => {
   const navigate = useNavigate();
 
   const [notes, setNotes] = useState([]);
+  const [itemId, setItemId] = useState(" ");
+  const [newNote, setNewNote] = useState(' ');
 
   useEffect(() => {
     fetchNotes();
@@ -23,13 +25,102 @@ const AllNotes = () => {
     }
   };
 
+  const clickUpdate = (data) => {
+    setItemId(data)
+  };
+
+  const clickDelete = async (data) => {
+    try {
+      await axios.delete(`http://localhost:8808/notes/${data}`);
+      fetchNotes()
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const clickSave = async(data) => {
+    let saveNote = {
+      note: newNote
+    }
+    try {
+      await axios.put(`http://localhost:8808/notes/${data}`, saveNote);
+      console.log({data})
+      console.log({newNote})
+      setItemId(' ')
+      fetchNotes()
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const clickCancel = () => {
+    setItemId(' ')
+  };
+
   const renderNoteList = () => {
     let display = [];
     for (let i = 0; i < notes.length; i++) {
       display.push(
-        <p className="noteList" key={notes.id}>
-          {notes[i].note}
-        </p>
+        <div>
+          {itemId !== notes[i].id && (
+            <div className="allNoteButtons">
+              <div>
+                <p className="noteList" key={notes.id}>
+                  {notes[i].note}
+                </p>
+              </div>
+              <div className="buttonView">
+                <div>
+                  <input
+                    className="updateButton"
+                    type="button"
+                    value={"Update"}
+                    onClick={() => clickUpdate(notes[i].id)}
+                  ></input>
+                </div>
+                <div>
+                  <input
+                    className="deleteButton"
+                    type="button"
+                    value={"Delete"}
+                    onClick={() => clickDelete(notes[i].id)}
+                  ></input>
+                </div>
+              </div>
+            </div>
+          )}
+          {itemId === notes[i].id && (
+            <div className="allNoteButtons">
+              <div>
+                <textarea
+                  className="textAreaAllNotes"
+                  type="text"
+                  placeholder="Type New Text..."
+                  onResize={false}
+                  onChange={(text) => setNewNote(text.target.value)}
+                  ></textarea>
+              </div>
+              <div className="buttonView">
+                <div>
+                  <input
+                    className="updateButton"
+                    type="button"
+                    value={"Save"}
+                    onClick={() => clickSave(notes[i].id)}
+                  ></input>
+                </div>
+                <div>
+                  <input
+                    className="deleteButton"
+                    type="button"
+                    value={"Cancel"}
+                    onClick={() => clickCancel()}
+                  ></input>
+                </div>
+              </div>
+            </div>
+          )}
+        </div>
       );
     }
     return display;

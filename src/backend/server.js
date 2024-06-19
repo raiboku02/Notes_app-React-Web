@@ -1,6 +1,6 @@
 import express from "express";
 import mysql from "mysql";
-import cors from 'cors'
+import cors from "cors";
 
 const app = express();
 
@@ -12,8 +12,8 @@ const db = mysql.createConnection({
 });
 
 //this allows the user to send request to client VERY IMPORTANT
-app.use(express.json())
-app.use(cors())
+app.use(express.json());
+app.use(cors());
 
 app.get("/", (req, res) => {
   res.json("Hello this is backend");
@@ -39,6 +39,33 @@ app.post("/notes", (req, res) => {
       return res.json(err);
     } else {
       return res.json("Note has been created Successfully");
+    }
+  });
+});
+
+app.put("/notes/:id", (req,res) => {
+  const notesId = req.params.id
+  const q = "UPDATE notes.note_list SET `note` = ? WHERE id = ?"
+  const values = [req.body.note]
+
+  db.query(q, [values, notesId], (err, data) => {
+    if (err) {
+      return res.json(err);
+    } else {
+      return res.json("Note has been updated Successfully");
+    }
+  });
+})
+
+app.delete("/notes/:id", (req, res) => {
+  const notesId = req.params.id
+  const q = "DELETE FROM notes.note_list WHERE id = ?"
+
+  db.query(q, [notesId], (err, data) => {
+    if (err) {
+      return res.json(err);
+    } else {
+      return res.json("Note has been deleted Successfully");
     }
   });
 });

@@ -5,9 +5,51 @@
     justify-content: center;
 }
 .noteList {
-    
     display: flex;
+    flex-wrap: wrap;
     flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    width: 700px;
+}
+.allNoteButtons {
+    display: flex;
+    flex-direction: row;
     align-items: center;
-    justify-content: center;
+    justify-content: space-between;
+    background-color: rgb(99, 245, 208);
+    padding-left: 15px;
+    padding-right: 15px;
+    margin-bottom: 10px;
+    border-radius: 10px;
+}
+.buttonView {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 150px;
+}
+.updateButton{
+    background-color: rgb(93, 219, 93);
+    height: 30px;
+    width: 70px;
+    border-radius: 10px;
+    border-width: 1px;
+}
+.deleteButton {
+    background-color: rgb(212, 52, 52);
+    color: white;
+    height: 30px;
+    width: 70px;
+    border-radius: 10px;
+    border-width: 1px; 
+}
+.textAreaAllNotes {
+    resize: none;
+    display: flex;
+    height: 50px;
+    width: 685px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    border-radius: 10px;
 }
